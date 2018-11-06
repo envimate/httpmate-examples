@@ -18,7 +18,6 @@ public class HttpMateIntegration {
                 .forRequestPath("api/next-event")
                 .andRequestMethod(HttpRequestMethod.GET)
                 .mappingRequestsToUseCaseParametersUsing(gson::fromJson)
-                .serializingResponseObjectsUsing(gson::toJson)
-                ;
+                .serializingResponseObjectsUsing(gson::toJson);
     }
 }

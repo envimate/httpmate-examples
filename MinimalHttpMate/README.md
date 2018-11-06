@@ -6,23 +6,26 @@ This tutorial creates a web service with a single end-point. We write a use-case
 
 Load the `MinimalHttpMate` project in your IDE, IntelliJ or Eclipse. Run the `src/main/java/com/envimate/demo/Server.java` entry point, which starts a local HTTP server on port 1234. Make a request with `curl`.
 
-```{.sh}
+```sh
 curl http://localhost:1234/api/next-event
 ```
 
 You'll get a JSON formatted response like below.
 
-```{.js}
-{"currentTime":"2018-11-06T09:31:07.24512","timeZone":"Europe/Berlin"}
+```json
+{
+    "currentTime":"2018-11-06T09:31:07.24512",
+    "timeZone":"Europe/Berlin"
+}
 ```
 
 Let's look at the code.
 
 ## Use-Case 
 
-Envimate promotes an architecture designed around use-cases, free of protocol code. In this example, we define a `NextEvent` use-case, located in the file `usecases/NextEvent.java`.
+envimate promotes an architecture designed around use-cases, free of protocol code. In this example, we define a `NextEvent` use-case, located in the file `usecases/NextEvent.java`.
 
-```{.java}
+```java
 public final class NextEvent {
     public NextEventResponse process() {
         final ZonedDateTime now = ZonedDateTime.now(ZoneId.systemDefault());
@@ -39,7 +42,7 @@ In this minimal example, we format the system time as the response. A real-world
 
 The return of the function is a `NextEventResponse` object.
 
-```{.java}
+```java
 public class NextEventResponse {
     public final String currentTime;
     public final String timeZone;
@@ -60,17 +63,17 @@ We're still in the business object domain in this class. We can write test cases
 
 We use `HttpMate.servingTheUseCase` to add an HTTP endpoint for our use case.
 
-```{.java}
+```java
 public static HttpMate create() {
     final Gson gson = new Gson();
     return HttpMate
-        .aSimpleHttpMateInstanceWithSecureDefaults()
-        .servingTheUseCase(NextEvent.class)
+            .aSimpleHttpMateInstanceWithSecureDefaults()
+            .servingTheUseCase(NextEvent.class)
             .forRequestPath("api/next-event")
             .andRequestMethod(HttpRequestMethod.GET)
             .mappingRequestsToUseCaseParametersUsing(gson::fromJson)
-            .serializingResponseObjectsUsing(gson::toJson)
-        ;
+            .serializingResponseObjectsUsing(gson::toJson);
+}
 ```
 
 We have only a single endpoint. We can add more by calling `servingTheUseCase` multiple times, each with a different use-case.
