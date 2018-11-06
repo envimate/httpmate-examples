@@ -79,3 +79,7 @@ The additional lines define the HTTP action and how to serialize data. The libra
 
 We're using a simple JSON serializer. It works, but only for something quick and dirty. In the next tutorial, we'll add arguments to our use-case, and show the limitations with the basic JSON serializer.
 
+
+## Code dependencies
+
+When you wish to add HttpMate to your project you'll need to add the `com.envimate.httpmate` dependency, typically as a Maven dependency. To use the GSON serializer, as in this example, also add `com.google.code.gson`. Look at the example `pom.xml` file.
