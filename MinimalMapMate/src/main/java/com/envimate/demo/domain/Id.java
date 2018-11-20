@@ -1,11 +1,14 @@
 package com.envimate.demo.domain;
 
 public class Id {
-    public final String value;
+    private final String value;
 
-
-    public Id(String value) {
+    private Id(final String value) {
         this.value = value;
+    }
+
+    public static Id id(String value) {
+        return new Id(value);
     }
 
     public String getValue() {

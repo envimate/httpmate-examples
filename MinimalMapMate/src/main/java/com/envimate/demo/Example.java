@@ -35,7 +35,7 @@ public class Example {
                 .build();
 
 
-        User user = new User(new Id("QSO-J1415"));
+        User user = User.user(Id.id("QSO-J1415"));
         final String json = serializer.serialize(user);
         System.out.println(json);
 
@@ -56,7 +56,7 @@ public class Example {
 
         String input = "{\"id\":\"QSO-J1415\"}";
         final User user = deserializer.deserialize(input, User.class);
-        System.out.println(user.id.value);
+        System.out.println(user.id.getValue());
 
     }
 }
